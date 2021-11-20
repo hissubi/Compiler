@@ -1,6 +1,14 @@
-#include "compiler.h"
+#include <iostream>
+#include <string>
+#include <vector>
+#include <fstream>
 
-lexical_analyzer(ifstream read_file, vector<vector<string>> token)
+#define OPERATORS_N 9
+
+extern char operators[];
+using namespace std;
+
+bool lexical_analyzer(ifstream& read_file, vector<vector<string>> tokens)
 {
     while(!read_file.eof())
     {
@@ -22,15 +30,22 @@ lexical_analyzer(ifstream read_file, vector<vector<string>> token)
                 string t = input_line.substr(rp_begin, i - rp_begin);
                 rp_begin = i+1;
                 token_line.push_back(t);
+                continue;
             }
-            else if(input_line[i] == '+') // need to fix : all operators
+
+            for(size_t j = 0; j < OPERATORS_N; j++)
             {
-                string t = input_line.substr(rp_begin, i - rp_begin + 1);
-                rp_begin = i+1;
-                token_line.push_back(t);
+                if( input_line[i] == operators[j] )
+                {
+                    string t = input_line.substr(rp_begin, i - rp_begin + 1);
+                    rp_begin = i+1;
+                    token_line.push_back(t);
+                    continue;
+                }
             }
         }
 
-        token.push_back(token_line);
+        tokens.push_back(token_line);
     }
+    return true;
 }

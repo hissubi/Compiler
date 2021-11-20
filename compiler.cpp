@@ -1,15 +1,24 @@
-#include "compiler.h"
+#include <iostream>
+#include <string>
+#include <vector>
+#include <fstream>
 
 using namespace std;
 
-int main(int argc, string* argv)
+char operators[] = {'+', '*', '<', ';', '=', '(', ')', '{', '}'};
+
+bool lexical_analyzer(ifstream& read_file, vector<vector<string>> token);
+//bool syntax_analyzer(vector<vector<string>> token);
+//bool code_generator(vector<vector<string>> token);
+
+int main(int argc, char** argv)
 {
     if(argc != 2){
         cout << "Input File Error!" << endl;
         return 0;
     }
 
-    string input_file_name = argv[1];
+    string input_file_name(argv[1]);
     
     ifstream target_file;
     ofstream instruction_file;
@@ -23,8 +32,8 @@ int main(int argc, string* argv)
     bool is_error = -1;
 
     is_error = lexical_analyzer(target_file, tokens);
-    is_error = syntax_analyzer();
-    is_error = code_generator();
+    //is_error = syntax_analyzer(tokens);
+    //is_error = code_generator(tokens);
  
 
 
