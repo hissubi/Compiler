@@ -1,0 +1,7 @@
+test
+
+*.code
+
+*.symbol
+
+*.out
