@@ -9,3 +9,5 @@ $(TARGET) : $(OBJS)
 clean : 
 	rm -f *.o
 	rm -f $(TARGET)
+	rm *.code
+	rm *.symbol
