@@ -284,6 +284,11 @@ bool LL_parser(vector<vector<string>> token)
     vector <string> parse_stack;
     vector <Node*> node_stack;
     parse_stack.push_back("prog0"); 
+    root = new Node;
+    root->data = "prog0";
+    root->childn = 0;
+    node_stack.push_back(root);
+
     while(1)
     {
         if(parse_stack.size() == 0) break;
@@ -300,9 +305,11 @@ bool LL_parser(vector<vector<string>> token)
             }       
         }
 
-        //check top of stack & token
         string top_parse_stack = parse_stack[0];
         string top_token = token[line][0];
+        Node* top_node = node_stack[0];
+        node_stack.erase(node_stack.begin());
+
         int terminal_id = find_terminal_id(token[line][0]);
         if(terminal_id == 16) top_token = "num";
         else if(terminal_id == 17) top_token = "word";
@@ -311,8 +318,17 @@ bool LL_parser(vector<vector<string>> token)
 
         if(top_parse_stack == top_token)
         {
+            if(top_token == "num" || top_token == "word")
+            {
+                Node* newnode = new Node;
+                newnode->data = token[line][0];
+                newnode->childn = 0;
+                top_node->childn = 1;
+                top_node->child.push_back(newnode);
+            }
             token[line].erase(token[line].begin());
             parse_stack.erase(parse_stack.begin());
+
             continue;
         }
         
@@ -336,6 +352,12 @@ bool LL_parser(vector<vector<string>> token)
         
         for(int i = 0; i < current_grammar->rhs.size(); i++)
         {
+            Node* newnode = new Node;
+            newnode->data = current_grammar->rhs[i];
+            newnode->childn = 0;
+            top_node->childn++;
+            top_node->child.push_back(newnode);
+            node_stack.insert(node_stack.begin()+i, newnode);
             parse_stack.insert(parse_stack.begin()+i, current_grammar->rhs[i]);
         }
 
@@ -344,7 +366,26 @@ bool LL_parser(vector<vector<string>> token)
             token[line].pop_back();
         }
     }
-
+/*
+    vector <Node*> check_tree;
+    check_tree.push_back(root);
+    while(check_tree.size() !=0)
+    {
+        Node* topnode = check_tree[0];
+        check_tree.erase(check_tree.begin());
+        cout << "data: " << topnode->data << "  child num: " << topnode->childn << endl;
+        
+        cout << "\t child: ";
+        for(int i = 0; i < topnode->childn; i++)
+        {
+            Node* tmpnode = topnode->child[i];
+            cout << tmpnode->data << " ";
+            check_tree.insert(check_tree.begin()+i, tmpnode);
+        }
+        cout << endl;
+        
+    }
+*/
     if(token.size() == line + 1 && token[line].size() == 0) return true;
     else 
     {

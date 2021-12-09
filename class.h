@@ -13,8 +13,7 @@ using namespace std;
 
 class Node{
     public:
-    string token;
-    int grammer_id;
+    string data;
     int childn;
     vector<Node*> child;
 };

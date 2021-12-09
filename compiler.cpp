@@ -11,6 +11,7 @@ Grammar grammer_list[30];
 Nonterminal nonterminal_list[N_NONTERMINAL];
 Terminal terminal_list[N_TERMINAL];
 Grammar* parsing_table[N_NONTERMINAL][N_TERMINAL];
+Node* root;
 
 bool lexical_analyzer(ifstream& read_file, vector<vector<string>>& token);
 bool parsing_table_generator(void);
