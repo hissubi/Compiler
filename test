@@ -1,4 +1,14 @@
-int a;
-int b;
-a = 1;
-b = a*10+2;
+myprogram () {
+      int a;
+      IF a<3 THEN {
+              int b;
+                  a = 4;
+                      b = 5;
+                          b = a * b;
+                            
+      } ELSE {
+              a = 10;
+                
+      }
+      
+}

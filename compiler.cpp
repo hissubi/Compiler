@@ -2,13 +2,19 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include "class.h"
 
 using namespace std;
 
 char operators[] = {'+', '*', '<', ';', '=', '(', ')', '{', '}'};
+Grammar grammer_list[30];
+Nonterminal nonterminal_list[N_NONTERMINAL];
+Terminal terminal_list[N_TERMINAL];
+Grammar* parsing_table[N_NONTERMINAL][N_TERMINAL];
 
 bool lexical_analyzer(ifstream& read_file, vector<vector<string>>& token);
-//bool syntax_analyzer(vector<vector<string>> token);
+bool parsing_table_generator(void);
+bool LL_parser(vector<vector<string>> token);
 //bool code_generator(vector<vector<string>> token);
 
 int main(int argc, char** argv)
@@ -42,7 +48,8 @@ int main(int argc, char** argv)
         }
         cout << "\n";
     }
-    //is_error = syntax_analyzer(tokens);
+    is_error = parsing_table_generator();
+    is_error = LL_parser(tokens);
     //is_error = code_generator(tokens);
  
 

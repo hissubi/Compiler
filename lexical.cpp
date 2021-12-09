@@ -2,10 +2,11 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include "class.h"
+#include "extern.h"
 
 #define OPERATORS_N 9
 
-extern char operators[];
 using namespace std;
 
 bool lexical_analyzer(ifstream& read_file, vector<vector<string>>& tokens)
