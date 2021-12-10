@@ -22,7 +22,7 @@ bool lexical_analyzer(ifstream& read_file, vector<vector<string>>& tokens)
         
         for(size_t i = 0; i < input_line.size(); i++)
         {
-            if(input_line[i] == ' ')
+            if(input_line[i] == ' ' || input_line[i] == '\t')
             {
                 if(i - rp_begin == 0)
                 {
