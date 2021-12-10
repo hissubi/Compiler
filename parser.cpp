@@ -278,7 +278,7 @@ int find_nonterminal_id(string nonterminal)
 
 bool LL_parser(vector<vector<string>> token)
 {   
-    //cout << "parser start\n";
+    cout << "parser start\n";
     int line = 0;
     int flag = 0;
     vector <string> parse_stack;
@@ -366,7 +366,7 @@ bool LL_parser(vector<vector<string>> token)
             token[line].pop_back();
         }
     }
-/*
+
     vector <Node*> check_tree;
     check_tree.push_back(root);
     while(check_tree.size() !=0)
@@ -385,7 +385,7 @@ bool LL_parser(vector<vector<string>> token)
         cout << endl;
         
     }
-*/
+
     if(token.size() == line + 1 && token[line].size() == 0) return true;
     else 
     {
