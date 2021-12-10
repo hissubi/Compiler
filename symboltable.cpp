@@ -14,45 +14,60 @@ void build_symbol_table(string input_file_name){
 
 	int blockid = 0;
 
+	vector <vector <string>> symbol_table;
+	vector <vector <vector <string>>> symbol_table_scopes;
 	vector <Node*> check_tree;
     check_tree.push_back(root);
 
 	while(check_tree.size() !=0)
     {
+		vector<string> buf;
         Node* topnode = check_tree[0];
         check_tree.erase(check_tree.begin());
 		if(topnode-> data == "block0"){	//block management : to seperate scope
+			symbol_table_scopes.push_back(symbol_table);
+			symbol_table.clear();
 			blockid++;
-			symbol_file << endl;
-			symbol_file << "scope " << blockid << endl;
-			symbol_file << endl;
 		}
 		if(topnode->data == "decl0" && topnode->childn == 3){ //declare : put declared to symbol table
-			symbol_file << topnode->child[1]->child[0]->data << " ";	//name of the variable
-			symbol_file << topnode->child[0]->child[0]->data << " ";	//type
+			buf.push_back(topnode->child[1]->child[0]->data);	//name
+			buf.push_back(topnode->child[0]->child[0]->data);	//type
 			if(topnode -> child[0]->child[0]->data == "int"){
-				symbol_file << sizeof(int) << " ";
+				buf.push_back("4");
 			}
 			else if(topnode->child[0]->child[0]->data == "char"){
-				symbol_file << sizeof(char) << " ";
+				buf.push_back("1");
 			}
-			symbol_file << endl;
 		}
 		if(topnode->data == "prog0"){	//add function to symbol table
-			symbol_file << topnode->child[0]->child[0]->data << " ";
-			symbol_file << "func";
-			symbol_file << endl;
+			buf.push_back(topnode->child[0]->child[0]->data);
+			buf.push_back("func");
 		}
-        cout << "data : " << topnode->data << "  child num: " << topnode->childn << endl;
-        cout << "\t child : ";
+        //cout << "data : " << topnode->data << "  child num: " << topnode->childn << endl;
+        //cout << "\t child : ";
         for(int i = 0; i < topnode->childn; i++)
         {
             Node* tmpnode = topnode->child[i];
-            cout << tmpnode->data << " ";
+            //cout << tmpnode->data << " ";
             check_tree.insert(check_tree.begin()+i, tmpnode);
         }
-        cout << endl;
-
+        //cout << endl;
+		if(buf.size() > 0){
+			symbol_table.push_back(buf);
+			buf.clear();
+		}
     }
+	for(int b=0;b<symbol_table_scopes.size();b++){
+		symbol_file << "scope " << b << endl;
+		symbol_table.clear();
+		symbol_table = symbol_table_scopes[b];
+		for(int i=0;i<symbol_table.size();i++){
+			for(int j=0;j<symbol_table[i].size();j++){
+				symbol_file << symbol_table[i][j] << " ";
+			}
+			symbol_file << endl;	
+		}
+		symbol_file << endl;
+	}
 	symbol_file.close();
 }
