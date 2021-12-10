@@ -31,10 +31,10 @@ void build_symbol_table(string input_file_name){
 			symbol_file << topnode->child[1]->child[0]->data << " ";	//name of the variable
 			symbol_file << topnode->child[0]->child[0]->data << " ";	//type
 			if(topnode -> child[0]->child[0]->data == "int"){
-				symbol_file << "4 ";
+				symbol_file << sizeof(int) << " ";
 			}
-			else{
-				symbol_file << "1 ";
+			else if(topnode->child[0]->child[0]->data == "char"){
+				symbol_file << sizeof(char) << " ";
 			}
 			symbol_file << endl;
 		}
