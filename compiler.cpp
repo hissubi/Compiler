@@ -16,6 +16,7 @@ Node* root;
 bool lexical_analyzer(ifstream& read_file, vector<vector<string>>& token);
 bool parsing_table_generator(void);
 bool LL_parser(vector<vector<string>> token);
+void build_symbol_table(string input_file_name);
 //bool code_generator(vector<vector<string>> token);
 
 int main(int argc, char** argv)
@@ -29,11 +30,11 @@ int main(int argc, char** argv)
     
     ifstream target_file;
     ofstream instruction_file;
-    ofstream symbol_file;
+    //ofstream symbol_file;
 
     target_file.open(input_file_name);
     instruction_file.open(input_file_name + ".code");
-    symbol_file.open(input_file_name + ".symbol");
+    //symbol_file.open(input_file_name + ".symbol");
 
     vector<vector<string>> tokens;
     bool is_error = false;
@@ -51,11 +52,12 @@ int main(int argc, char** argv)
     }
     is_error = parsing_table_generator();
     is_error = LL_parser(tokens);
+	build_symbol_table(input_file_name);
     //is_error = code_generator(tokens);
  
 
 
     target_file.close();
     instruction_file.close();
-    symbol_file.close();
+    //symbol_file.close();
 }

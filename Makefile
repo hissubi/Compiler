@@ -1,6 +1,6 @@
 CC = g++
 CFLAGS = -g -Wall - O2
-OBJS = compiler.o lexical.o parser.o
+OBJS = compiler.o lexical.o parser.o symboltable.o
 TARGET = Compiler2021
 
 $(TARGET) : $(OBJS)
