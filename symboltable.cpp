@@ -80,6 +80,10 @@ void build_symbol_table(string input_file_name){
       tmpnode->resistor = topnode->resistor;
       if(topnode->data == "cond0" && i == 2)
         tmpnode->resistor++;
+      if(topnode->data == "expr0" && i == 1)
+        tmpnode->resistor++;
+      if(topnode->data == "T0" && tmpnode->childn != 0 && i == 1)
+        tmpnode->resistor++;
 
       tmpnode->label = topnode->label;
       if(topnode->data == "stat0" && i == 2 && tmpnode->data == "THEN")

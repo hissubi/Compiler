@@ -32,23 +32,23 @@ void search_tree(ofstream& file, Node* topnode) {
     file << "BEGIN " << topnode->parent->child[0]->child[0]->data << "\n";
 
   if(topnode->data == "stat0" && topnode->childn == 4) {
-    file << "ST R" << topnode->resistor << ", ";
+    file << "        ST R" << topnode->resistor << ", ";
     file << "(" << find_addr(topnode, topnode->child[0]->child[0]->data, topnode->scope) << ")\n";
   }
-  if(topnode->data == "expr0") {
-    file << "LD R" << topnode->resistor << ", ";
-    Node* tmpnode = topnode->child[0]->child[0]->child[0]->child[0];
+  if(topnode->data == "fact0") {
+    file << "        LD R" << topnode->resistor << ", ";
+    Node* tmpnode = topnode->child[0];
     if(tmpnode->data == "num")
       file << tmpnode->child[0]->data << "\n";
     else
       file << "(" << find_addr(tmpnode, tmpnode->child[0]->data, tmpnode->scope) << ")\n";
   }
   if(topnode->data == "cond0") {
-    file << "LT R" << topnode->resistor << ", R";
+    file << "        LT R" << topnode->resistor << ", R";
     file << topnode->child[0]->resistor << ", R" << topnode->child[2]->resistor << "\n";
   }
   if(topnode->data == "THEN") {
-    file << "JUMPF L" << topnode->label << "\n";
+    file << "        JUMPF L" << topnode->label << "\n";
   }
   if(topnode->data == "block0") {
     Node* parentnode = topnode->parent;
@@ -58,13 +58,26 @@ void search_tree(ofstream& file, Node* topnode) {
     
     if(parentnode->childn == 6) {
       if(parentnode->child[3] == topnode) // #3 block in IF
-        file << "JUMP L" << topnode->label << "\n";
+        file << "        JUMP L" << topnode->label << "\n";
       else if(parentnode->child[5] == topnode) // #5 block in IF
         file << "L" << topnode->label << "\n";
     }
   }
   if(topnode->data == "ELSE") {
     file << "L" << topnode->label << "\n";
+  }
+  if(topnode->data == "expr0") {
+    if(topnode->childn >= 2)
+      if(topnode->child[1]->childn >= 1) {
+        if(topnode->child[1]->child[0]->data == "+") {
+          file << "        ADD R" << topnode->resistor << ", R" << topnode->child[0]->resistor << ", R";
+          file << topnode->child[1]->resistor <<"\n";
+        }
+      }
+  }
+  if(topnode->data == "T0" && topnode->child[1]->childn != 0) {
+    file << "        MUL R" << topnode->resistor << ", R" << topnode->child[0]->resistor << ", R";
+    file << topnode->child[1]->resistor <<"\n";
   }
   //-----------------------------------------------------------------
 }

@@ -1,12 +1,26 @@
 lexical success
-4
+11
 1 line size: 4
 myprogram ( ) { 
 2 line size: 3
 int a ; 
 3 line size: 6
-a = a + b ; 
-4 line size: 1
+IF a < 3 THEN { 
+4 line size: 3
+int b ; 
+5 line size: 4
+a = 4 ; 
+6 line size: 4
+b = 5 ; 
+7 line size: 6
+b = a * b ; 
+8 line size: 3
+} ELSE { 
+9 line size: 4
+a = 10 ; 
+10 line size: 1
+} 
+11 line size: 1
 } 
 parser start
 
@@ -65,18 +79,15 @@ data: slist0  child num: 1
 data: slist_0  child num: 2
 0 0 1
 	 child: stat0 slist_0 
-data: stat0  child num: 4
+data: stat0  child num: 6
 0 0 1
-	 child: word = expr0 ; 
-data: word  child num: 1
-0 0 1
-	 child: a 
-data: a  child num: 0
+	 child: IF cond0 THEN block0 ELSE block0 
+data: IF  child num: 0
 0 0 1
 	 child: 
-data: =  child num: 0
+data: cond0  child num: 3
 0 0 1
-	 child: 
+	 child: expr0 < expr0 
 data: expr0  child num: 2
 0 0 1
 	 child: T0 E_0 
@@ -98,35 +109,290 @@ data: a  child num: 0
 data: T_0  child num: 0
 0 0 1
 	 child: 
-data: E_0  child num: 3
-0 0 1
-	 child: + T0 E_0 
-data: +  child num: 0
+data: E_0  child num: 0
+1 0 1
+	 child: 
+data: <  child num: 0
 0 0 1
 	 child: 
+data: expr0  child num: 2
+1 0 1
+	 child: T0 E_0 
 data: T0  child num: 2
-0 0 1
+1 0 1
 	 child: F0 T_0 
 data: F0  child num: 1
-0 0 1
+1 0 1
 	 child: fact0 
 data: fact0  child num: 1
-0 0 1
-	 child: word 
-data: word  child num: 1
-0 0 1
-	 child: b 
-data: b  child num: 0
-0 0 1
+1 0 1
+	 child: num 
+data: num  child num: 1
+1 0 1
+	 child: 3 
+data: 3  child num: 0
+1 0 1
 	 child: 
 data: T_0  child num: 0
-0 0 1
+1 0 1
 	 child: 
 data: E_0  child num: 0
+2 0 1
+	 child: 
+data: THEN  child num: 0
 0 0 1
 	 child: 
+data: block0  child num: 4
+0 1 2
+	 child: { decls0 slist0 } 
+data: {  child num: 0
+0 1 2
+	 child: 
+data: decls0  child num: 1
+0 1 2
+	 child: decls_0 
+data: decls_0  child num: 2
+0 1 2
+	 child: decl0 decls_0 
+data: decl0  child num: 3
+0 1 2
+	 child: vtype0 word ; 
+data: vtype0  child num: 1
+0 1 2
+	 child: int 
+data: int  child num: 0
+0 1 2
+	 child: 
+data: word  child num: 1
+0 1 2
+	 child: b 
+data: b  child num: 0
+0 1 2
+	 child: 
 data: ;  child num: 0
+0 1 2
+	 child: 
+data: decls_0  child num: 0
+0 1 2
+	 child: 
+data: slist0  child num: 1
+0 1 2
+	 child: slist_0 
+data: slist_0  child num: 2
+0 1 2
+	 child: stat0 slist_0 
+data: stat0  child num: 4
+0 1 2
+	 child: word = expr0 ; 
+data: word  child num: 1
+0 1 2
+	 child: a 
+data: a  child num: 0
+0 1 2
+	 child: 
+data: =  child num: 0
+0 1 2
+	 child: 
+data: expr0  child num: 2
+0 1 2
+	 child: T0 E_0 
+data: T0  child num: 2
+0 1 2
+	 child: F0 T_0 
+data: F0  child num: 1
+0 1 2
+	 child: fact0 
+data: fact0  child num: 1
+0 1 2
+	 child: num 
+data: num  child num: 1
+0 1 2
+	 child: 4 
+data: 4  child num: 0
+0 1 2
+	 child: 
+data: T_0  child num: 0
+0 1 2
+	 child: 
+data: E_0  child num: 0
+1 1 2
+	 child: 
+data: ;  child num: 0
+0 1 2
+	 child: 
+data: slist_0  child num: 2
+0 1 2
+	 child: stat0 slist_0 
+data: stat0  child num: 4
+0 1 2
+	 child: word = expr0 ; 
+data: word  child num: 1
+0 1 2
+	 child: b 
+data: b  child num: 0
+0 1 2
+	 child: 
+data: =  child num: 0
+0 1 2
+	 child: 
+data: expr0  child num: 2
+0 1 2
+	 child: T0 E_0 
+data: T0  child num: 2
+0 1 2
+	 child: F0 T_0 
+data: F0  child num: 1
+0 1 2
+	 child: fact0 
+data: fact0  child num: 1
+0 1 2
+	 child: num 
+data: num  child num: 1
+0 1 2
+	 child: 5 
+data: 5  child num: 0
+0 1 2
+	 child: 
+data: T_0  child num: 0
+0 1 2
+	 child: 
+data: E_0  child num: 0
+1 1 2
+	 child: 
+data: ;  child num: 0
+0 1 2
+	 child: 
+data: slist_0  child num: 2
+0 1 2
+	 child: stat0 slist_0 
+data: stat0  child num: 4
+0 1 2
+	 child: word = expr0 ; 
+data: word  child num: 1
+0 1 2
+	 child: b 
+data: b  child num: 0
+0 1 2
+	 child: 
+data: =  child num: 0
+0 1 2
+	 child: 
+data: expr0  child num: 2
+0 1 2
+	 child: T0 E_0 
+data: T0  child num: 2
+0 1 2
+	 child: F0 T_0 
+data: F0  child num: 1
+0 1 2
+	 child: fact0 
+data: fact0  child num: 1
+0 1 2
+	 child: word 
+data: word  child num: 1
+0 1 2
+	 child: a 
+data: a  child num: 0
+0 1 2
+	 child: 
+data: T_0  child num: 3
+1 1 2
+	 child: * F0 T_0 
+data: *  child num: 0
+1 1 2
+	 child: 
+data: F0  child num: 1
+1 1 2
+	 child: fact0 
+data: fact0  child num: 1
+1 1 2
+	 child: word 
+data: word  child num: 1
+1 1 2
+	 child: b 
+data: b  child num: 0
+1 1 2
+	 child: 
+data: T_0  child num: 0
+1 1 2
+	 child: 
+data: E_0  child num: 0
+1 1 2
+	 child: 
+data: ;  child num: 0
+0 1 2
+	 child: 
+data: slist_0  child num: 0
+0 1 2
+	 child: 
+data: }  child num: 0
+0 1 2
+	 child: 
+data: ELSE  child num: 0
 0 0 1
+	 child: 
+data: block0  child num: 4
+0 1 3
+	 child: { decls0 slist0 } 
+data: {  child num: 0
+0 1 3
+	 child: 
+data: decls0  child num: 1
+0 1 3
+	 child: decls_0 
+data: decls_0  child num: 0
+0 1 3
+	 child: 
+data: slist0  child num: 1
+0 1 3
+	 child: slist_0 
+data: slist_0  child num: 2
+0 1 3
+	 child: stat0 slist_0 
+data: stat0  child num: 4
+0 1 3
+	 child: word = expr0 ; 
+data: word  child num: 1
+0 1 3
+	 child: a 
+data: a  child num: 0
+0 1 3
+	 child: 
+data: =  child num: 0
+0 1 3
+	 child: 
+data: expr0  child num: 2
+0 1 3
+	 child: T0 E_0 
+data: T0  child num: 2
+0 1 3
+	 child: F0 T_0 
+data: F0  child num: 1
+0 1 3
+	 child: fact0 
+data: fact0  child num: 1
+0 1 3
+	 child: num 
+data: num  child num: 1
+0 1 3
+	 child: 10 
+data: 10  child num: 0
+0 1 3
+	 child: 
+data: T_0  child num: 0
+0 1 3
+	 child: 
+data: E_0  child num: 0
+1 1 3
+	 child: 
+data: ;  child num: 0
+0 1 3
+	 child: 
+data: slist_0  child num: 0
+0 1 3
+	 child: 
+data: }  child num: 0
+0 1 3
 	 child: 
 data: slist_0  child num: 0
 0 0 1
