@@ -287,6 +287,7 @@ bool LL_parser(vector<vector<string>> token)
     root = new Node;
     root->data = "prog0";
     root->childn = 0;
+    root->parent = NULL;
     node_stack.push_back(root);
 
     while(1)
@@ -323,6 +324,7 @@ bool LL_parser(vector<vector<string>> token)
                 Node* newnode = new Node;
                 newnode->data = token[line][0];
                 newnode->childn = 0;
+                newnode->parent = top_node;
                 top_node->childn = 1;
                 top_node->child.push_back(newnode);
             }
@@ -355,6 +357,7 @@ bool LL_parser(vector<vector<string>> token)
             Node* newnode = new Node;
             newnode->data = current_grammar->rhs[i];
             newnode->childn = 0;
+            newnode->parent = top_node;
             top_node->childn++;
             top_node->child.push_back(newnode);
             node_stack.insert(node_stack.begin()+i, newnode);
@@ -366,7 +369,7 @@ bool LL_parser(vector<vector<string>> token)
             token[line].pop_back();
         }
     }
-
+/*
     vector <Node*> check_tree;
     check_tree.push_back(root);
     while(check_tree.size() !=0)
@@ -385,7 +388,7 @@ bool LL_parser(vector<vector<string>> token)
         cout << endl;
         
     }
-
+*/
     if(token.size() == line + 1 && token[line].size() == 0) return true;
     else 
     {

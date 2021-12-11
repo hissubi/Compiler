@@ -9,6 +9,7 @@ myprogram () {
                             
     }
     ELSE {
+        int c;
         a = 10;
                 
     }

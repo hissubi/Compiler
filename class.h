@@ -15,6 +15,7 @@ class Node{
     public:
     string data;
     int childn;
+    Node* parent;
     vector<Node*> child;
 };
 
