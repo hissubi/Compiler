@@ -16,7 +16,6 @@ void build_symbol_table(string input_file_name){
   int labelid = 0;
 
 	vector <vector <string>> symbol_table;
-	vector <vector <vector <string>>> symbol_table_scopes;
 	vector <Node*> check_tree;
 
   root->resistor = 0;

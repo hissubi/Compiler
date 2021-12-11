@@ -13,11 +13,13 @@ Terminal terminal_list[N_TERMINAL];
 Grammar* parsing_table[N_NONTERMINAL][N_TERMINAL];
 Node* root;
 
+vector <vector <vector <string>>> symbol_table_scopes;
+
 bool lexical_analyzer(ifstream& read_file, vector<vector<string>>& token);
 bool parsing_table_generator(void);
 bool LL_parser(vector<vector<string>> token);
 void build_symbol_table(string input_file_name);
-//bool code_generator(vector<vector<string>> token);
+void code_generator(string input_file_name, Node* topnode);
 
 int main(int argc, char** argv)
 {
@@ -42,9 +44,9 @@ int main(int argc, char** argv)
     is_error = lexical_analyzer(target_file, tokens);
     if(is_error) cout << "lexical success" << endl;
     cout << tokens.size() << endl;
-    for(int i = 0; i < tokens.size(); i++){
+    for(unsigned int i = 0; i < tokens.size(); i++){
         cout << i+1 << " line size: " << tokens[i].size() << endl;
-        for(int j = 0; j < tokens[i].size(); j++)
+        for(unsigned int j = 0; j < tokens[i].size(); j++)
         {
             cout << tokens[i][j] << ' ';
         }
@@ -52,8 +54,8 @@ int main(int argc, char** argv)
     }
     is_error = parsing_table_generator();
     is_error = LL_parser(tokens);
-	build_symbol_table(input_file_name);
-    //is_error = code_generator(tokens);
+	  build_symbol_table(input_file_name);
+    code_generator(input_file_name, root);
  
 
 
