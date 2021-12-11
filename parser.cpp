@@ -291,12 +291,14 @@ int find_nonterminal_id(string nonterminal)
 
 bool LL_parser(vector<vector<string>> token, Node*& root)
 {   
+    // generate parsing table
     parsing_table_generator();
     
     int line = 0;
     int flag = 0;
-    vector <string> parse_stack;
-    vector <Node*> node_stack;
+    vector <string> parse_stack; // stack for parser processing
+    vector <Node*> node_stack;  // Node stack for gernerating tree
+    
     parse_stack.push_back("prog0"); 
     root = new Node;
     root->data = "prog0";
@@ -306,12 +308,17 @@ bool LL_parser(vector<vector<string>> token, Node*& root)
 
     while(1)
     {
+        // if parser stack is empty : end parser
         if(parse_stack.size() == 0) break;
+
+        // if read all of tokens : read '$' for token
         else if(token.size() == line + 1 && token[line].size() == 0)
         {
             flag = 1;
             token[line].push_back("$");
         }
+
+        // if read all of tokens in a line : read next line
         else if(token[line].size() == 0) 
         {
             while(token[line].size() == 0)
@@ -320,19 +327,22 @@ bool LL_parser(vector<vector<string>> token, Node*& root)
             }       
         }
 
-        string top_parse_stack = parse_stack[0];
-        string top_token = token[line][0];
-        Node* top_node = node_stack[0];
+        string top_parse_stack = parse_stack[0];    // top of parser stack
+        string top_token = token[line][0];          // next token
+        Node* top_node = node_stack[0];             // top of node stack
+        
+        // pop node stack
         node_stack.erase(node_stack.begin());
 
+        // find terminal id
         int terminal_id = find_terminal_id(token[line][0]);
         if(terminal_id == 16) top_token = "num";
         else if(terminal_id == 17) top_token = "word";
 
-        //cout << "top token : "<< top_token << "  top parse stack: "<< top_parse_stack << endl;
-
+        // if top of parser stack and token is same
         if(top_parse_stack == top_token)
         {
+            // if it is number or word : make new node with token
             if(top_token == "num" || top_token == "word")
             {
                 Node* newnode = new Node;
@@ -343,32 +353,40 @@ bool LL_parser(vector<vector<string>> token, Node*& root)
                 top_node->childn = 1;
                 top_node->child.push_back(newnode);
             }
+
+            // pop parser stack and token
             token[line].erase(token[line].begin());
             parse_stack.erase(parse_stack.begin());
 
             continue;
         }
         
+        // find nonterminal id
         int nonterminal_id = find_nonterminal_id(parse_stack[0]);
+        
+        // if top of parser stack or token is invalid
         if(terminal_id == -1 || nonterminal_id == -1) 
         {
-            cout << terminal_id << nonterminal_id;
-            cout << "Syntax Error: line " << line+1 << endl;
+            // error
+            cout << "Syntax Error (Line " << line+1 << "): Error in parser process" << endl;
             return true;
         }
 
+        // determine which grammar should be used with parsing table
         Grammar* current_grammar = parsing_table[nonterminal_id][terminal_id];
-        //cout << "grammar id: " << current_grammar->grammar_id << endl;
+
+        // if parsing table is NULL
         if(current_grammar == NULL)
         {
-            cout << "Syntax Error: no appropriate rule: line" << line+1 << endl;
-            cout << top_token << " " << top_parse_stack<< endl;
-            break;
+            // error : no appropriate grammar
+            cout << "Syntax Error (Line " << line+1 << "): There is no proper grammar" << endl;
             return true;
         }
         
+        // pop parser stack
         parse_stack.erase(parse_stack.begin());
         
+        // generate nodes by grammar
         for(int i = 0; i < current_grammar->rhs.size(); i++)
         {
             Node* newnode = new Node;
@@ -378,44 +396,27 @@ bool LL_parser(vector<vector<string>> token, Node*& root)
             newnode->line_num = line+1;
             top_node->childn++;
             top_node->child.push_back(newnode);
+
+            //push into node stack and parser stack
             node_stack.insert(node_stack.begin()+i, newnode);
             parse_stack.insert(parse_stack.begin()+i, current_grammar->rhs[i]);
         }
-
+    
+        // pop '$' from token
         if(flag)
         {
             token[line].pop_back();
         }
     }
-/*
-    //print tree
-
-    cout << "\n\n";
-    vector <Node*> check_tree;
-    check_tree.push_back(root);
-    while(check_tree.size() !=0)
-    {
-        Node* topnode = check_tree[0];
-        check_tree.erase(check_tree.begin());
-        cout << "data: " << topnode->data << "  child num: " << topnode->childn << endl;
-        cout << topnode->resistor << " " << topnode->label << " " << topnode->scope << "\n";
-        
-        cout << "\t child: ";
-        for(int i = 0; i < topnode->childn; i++)
-        {
-            Node* tmpnode = topnode->child[i];
-            cout << tmpnode->data << " ";
-            check_tree.insert(check_tree.begin()+i, tmpnode);
-        }
-        cout << endl;
-        
-    }
-    cout << "parser end\n\n";
-*/
+    
+    // if read all of tokens : parser finished properly
     if(token.size() == line + 1 && token[line].size() == 0) return false;
+
+    // if not, error occurs
     else 
     {
-        cout << "Syntax Error: excessive input token" << endl;
+        cout << "Syntax Error: Excessive target code" << endl;
+        cout << "        Note: Check parentheses" << endl;
         return true;
     }          
 }

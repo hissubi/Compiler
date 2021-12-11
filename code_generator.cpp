@@ -9,6 +9,7 @@
 using namespace std;
 
 bool flag;
+int error_line_number;
 void search_tree(ofstream& file, Node* topnode);
 string find_addr(Node* tmpnode, string target, int c_scope);
 
@@ -22,8 +23,8 @@ bool code_generator(ofstream& code_file, Node* topnode) {
   search_tree(code_file, topnode);
 
   if(flag == false) {
-    code_file << "\nPRINT ERROR\n";
-    cout << "\nERROR IN CODE_GENERATOR\n";
+    code_file << "\nError: check error message\n";
+    cout << "Semantic Error (Line " << error_line_number << "): Undeclared variable" << endl;
     return true;
   }
 
@@ -60,6 +61,7 @@ void search_tree(ofstream& file, Node* topnode) {
     file << "        ST R" << topnode->resistor << ", ";
     if(find_addr(topnode, topnode->child[0]->child[0]->data, topnode->scope) == "-1") {
       flag = false;
+      error_line_number = topnode->line_num;
       return;
     }
     file << "(" << find_addr(topnode, topnode->child[0]->child[0]->data, topnode->scope) << ")\n";
@@ -71,6 +73,7 @@ void search_tree(ofstream& file, Node* topnode) {
       file << tmpnode->child[0]->data << "\n";
     else {
       if(find_addr(topnode, topnode->child[0]->child[0]->data, topnode->scope) == "-1") {
+        error_line_number = topnode->line_num;
         flag = false;
         return;
       }

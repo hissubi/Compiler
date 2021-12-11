@@ -1,6 +1,6 @@
 myprogram () {
   int a;
   a = 1;
-  EXIT a ;
-  a = 2;
+  EXIT a;
+    int a;
 }
