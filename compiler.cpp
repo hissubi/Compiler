@@ -12,6 +12,7 @@ Nonterminal nonterminal_list[N_NONTERMINAL];
 Terminal terminal_list[N_TERMINAL];
 Grammar* parsing_table[N_NONTERMINAL][N_TERMINAL];
 Node* root;
+int use_resistor;
 
 vector <vector <vector <string>>> symbol_table_scopes;
 

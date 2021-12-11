@@ -142,7 +142,7 @@ data: expr0  child num: 2
 0 0 0
 	 child: T0 E_0 
 data: T0  child num: 2
-728707800 53 728707800
+0 0 0
 	 child: F0 T_0 
 data: F0  child num: 1
 0 0 0
@@ -160,7 +160,7 @@ data: T_0  child num: 0
 0 0 0
 	 child: 
 data: E_0  child num: 0
-22271600 0 22269120
+0 0 0
 	 child: 
 data: <  child num: 0
 0 0 0

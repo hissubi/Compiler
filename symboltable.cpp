@@ -5,6 +5,7 @@
 #include "class.h"
 #include "extern.h"
 #include <stdio.h>
+#include <iomanip>
 
 using namespace std;
 
@@ -12,6 +13,7 @@ void build_symbol_table(string input_file_name){
   ofstream symbol_file;
 	symbol_file.open(input_file_name + ".symbol");
 
+  use_resistor = 0;
 	int blockid = 0;
   int labelid = 0;
 
@@ -28,6 +30,9 @@ void build_symbol_table(string input_file_name){
     
     Node* topnode = check_tree[0];
     check_tree.erase(check_tree.begin());
+
+    if( (topnode->resistor + 1) > use_resistor ) 
+      use_resistor = topnode->resistor + 1;
 
 		if(topnode-> data == "block0") {	//block management : to seperate scope
 			symbol_table_scopes.push_back(symbol_table);
@@ -112,18 +117,31 @@ void build_symbol_table(string input_file_name){
 
 
   // print symbol_table
+
+  symbol_file << "=================================================================================\n";
+	symbol_file << setw(6) <<"scope" << setw(18) << "Symbol name";
+	symbol_file << setw(18) <<"type" << setw(18) << "size" << setw(18) << "address" << "\n";
+  symbol_file << "=================================================================================\n";
+
 	for(unsigned int b=0;b<symbol_table_scopes.size();b++) {
-		symbol_file << "scope " << b << endl;
+		symbol_file << setw(6) << b;
 		symbol_table.clear();
 		symbol_table = symbol_table_scopes[b];
 		for(unsigned int i=0;i<symbol_table.size();i++){
+      if(i!=0)
+        symbol_file << setw(6) << " ";
 			for(unsigned int j=0;j<symbol_table[i].size();j++){
-				symbol_file << symbol_table[i][j] << " ";
+        if(j == 1 && symbol_table[i][j] == "func") {
+				  symbol_file << setw(18) << symbol_table[i][j];
+          break;
+        }
+				symbol_file << setw(18) << symbol_table[i][j];
 			}
 			symbol_file << endl;	
 		}
 		symbol_file << endl;
 	}
+  symbol_file << "=================================================================================\n";
 	symbol_file.close();
 
 

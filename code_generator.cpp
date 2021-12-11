@@ -15,8 +15,15 @@ void code_generator(string input_file_name, Node* topnode) {
   ofstream code_file;
   code_file.open(input_file_name + ".code");
   
+  code_file << "\n\n****************************\n";
+  code_file <<"       Psuedo Code "<< endl;
+  code_file << "****************************\n\n\n";
+
   search_tree(code_file, topnode);
 
+  code_file << "\n\n****************************\n";
+  code_file <<"    Using Register : " << use_resistor << endl;
+  code_file << "****************************\n";
   code_file.close();
 }
 
