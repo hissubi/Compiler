@@ -56,7 +56,7 @@ void build_symbol_table(ofstream& symbol_file, Node*& root){
 
       int addr = 0;
 
-      //find used registor addr in the other scope (find at parent node)
+      //find used reg addr in the other scope (find at parent node)
       if(symbol_table.size() == 0) {
         int c_scope = topnode->scope;
         Node* c_node = topnode;
@@ -93,7 +93,7 @@ void build_symbol_table(ofstream& symbol_file, Node*& root){
     for(int i = 0; i < topnode->childn; i++) {
       Node* tmpnode = topnode->child[i];
       tmpnode->scope = topnode->scope;
-      tmpnode->registor = topnode->reg;
+      tmpnode->reg = topnode->reg;
       //Sethi-Ullman
       if(topnode->data == "cond0" && i == 2)
         tmpnode->reg++;
