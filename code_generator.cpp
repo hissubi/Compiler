@@ -48,6 +48,14 @@ void search_tree(ofstream& file, Node* topnode) {
   if(flag == false)
     return;
 
+  if(topnode->data == "stat0" && topnode->childn == 3) {
+    if(topnode->child[0]->data == "EXIT") {
+      file << "        LD RR, R" << topnode->resistor << "\n";
+      file << "        JUMP END\n";
+    }
+  }
+
+
   if(topnode->data == "(")
     file << "BEGIN " << topnode->parent->child[0]->child[0]->data << "\n";
 

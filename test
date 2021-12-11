@@ -1,17 +1,6 @@
 myprogram () {
   int a;
-  c = 1;
-  IF a<3 THEN {
-    int b;
-    b = 4;
-
-    IF b < 4 THEN {
-    int a;
-    int b;
-    } ELSE {
-      a = 5;
-    }
-  } ELSE {
-    a = 10;
-  }
+  a = 1;
+  EXIT a ;
+  a = 2;
 }
