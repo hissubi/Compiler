@@ -325,6 +325,7 @@ bool LL_parser(vector<vector<string>> token)
                 newnode->data = token[line][0];
                 newnode->childn = 0;
                 newnode->parent = top_node;
+                newnode->line_num = line + 1;
                 top_node->childn = 1;
                 top_node->child.push_back(newnode);
             }
@@ -360,6 +361,7 @@ bool LL_parser(vector<vector<string>> token)
             newnode->data = current_grammar->rhs[i];
             newnode->childn = 0;
             newnode->parent = top_node;
+            newnode->line_num = line+1;
             top_node->childn++;
             top_node->child.push_back(newnode);
             node_stack.insert(node_stack.begin()+i, newnode);

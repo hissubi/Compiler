@@ -6,6 +6,8 @@ myprogram () {
     b = 4;
 
     IF b < 4 THEN {
+    int a;
+    int b;
     } ELSE {
       a = 5;
     }

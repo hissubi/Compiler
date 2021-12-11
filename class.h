@@ -17,6 +17,7 @@ class Node{
     int childn;
     Node* parent;
     vector<Node*> child;
+    int line_num;
 
     int resistor;
     int label;
