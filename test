@@ -1,9 +1,4 @@
-hello () {
+myprogram () {
   int a ;
-  a = 0 ;
-  IF a < 3 THEN {
-    int b;
-  } ELSE {
-    a = 1;
-  }
+  a = a + b ;
 }
