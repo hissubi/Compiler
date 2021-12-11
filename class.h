@@ -19,7 +19,7 @@ class Node{
     vector<Node*> child;
     int line_num;
 
-    int resistor;
+    int register;
     int label;
     int scope;
 };

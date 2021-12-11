@@ -6,7 +6,7 @@
 
 using namespace std;
 
-int use_resistor;   // number of used register
+int use_register;   // number of used register
 
 vector <vector <vector <string>>> symbol_table_scopes;
 

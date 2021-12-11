@@ -36,7 +36,7 @@ bool code_generator(ofstream& code_file, Node* topnode) {
 
   //print shape
   code_file << "\n\n****************************\n";
-  code_file <<"    Using Register : " << use_resistor << endl;
+  code_file <<"    Using Register : " << use_register << endl;
   code_file << "****************************\n";
 
   return false;
@@ -57,7 +57,7 @@ void search_tree(ofstream& file, Node* topnode) {
   //print EXIT
   if(topnode->data == "stat0" && topnode->childn == 3) {
     if(topnode->child[0]->data == "EXIT") {
-      file << "        LD RR, R" << topnode->resistor << "\n";
+      file << "        LD RR, R" << topnode->register << "\n";
       file << "        JUMP END\n";
 
       //use Resistor Returning
@@ -71,7 +71,7 @@ void search_tree(ofstream& file, Node* topnode) {
 
   //print "="
   if(topnode->data == "stat0" && topnode->childn == 4) {
-    file << "        ST R" << topnode->resistor << ", ";
+    file << "        ST R" << topnode->register << ", ";
     if(find_addr(topnode, topnode->child[0]->child[0]->data, topnode->scope) == "-1") {
       flag = false;
       error_line_number = topnode->line_num;
@@ -81,11 +81,15 @@ void search_tree(ofstream& file, Node* topnode) {
   }
   //print LD
   if(topnode->data == "fact0") {
+<<<<<<< HEAD
     //check using resistor numbers
     if( (topnode->resistor + 1) > use_resistor ) 
       use_resistor = topnode->resistor + 1;
 
     file << "        LD R" << topnode->resistor << ", ";
+=======
+    file << "        LD R" << topnode->register << ", ";
+>>>>>>> 7a4dcaa5827becc1d9fafa24600a7dc2cd9ddc2c
     Node* tmpnode = topnode->child[0];
     if(tmpnode->data == "num")
       file << tmpnode->child[0]->data << "\n";
@@ -100,11 +104,16 @@ void search_tree(ofstream& file, Node* topnode) {
   }
   //print LT
   if(topnode->data == "cond0") {
+<<<<<<< HEAD
     //check using resistor numbers
     if( (topnode->resistor + 1) > use_resistor ) 
       use_resistor = topnode->resistor + 1;
     file << "        LT R" << topnode->resistor << ", R";
     file << topnode->child[0]->resistor << ", R" << topnode->child[2]->resistor << "\n";
+=======
+    file << "        LT R" << topnode->register << ", R";
+    file << topnode->child[0]->register << ", R" << topnode->child[2]->register << "\n";
+>>>>>>> 7a4dcaa5827becc1d9fafa24600a7dc2cd9ddc2c
   }
   //print THEN
   if(topnode->data == "THEN") {
@@ -133,15 +142,15 @@ void search_tree(ofstream& file, Node* topnode) {
     if(topnode->childn >= 2)
       if(topnode->child[1]->childn >= 1) {
         if(topnode->child[1]->child[0]->data == "+") {
-          file << "        ADD R" << topnode->resistor << ", R" << topnode->child[0]->resistor << ", R";
-          file << topnode->child[1]->resistor <<"\n";
+          file << "        ADD R" << topnode->register << ", R" << topnode->child[0]->register << ", R";
+          file << topnode->child[1]->register <<"\n";
         }
       }
   }
   //print "*"
   if(topnode->data == "T0" && topnode->child[1]->childn != 0) {
-    file << "        MUL R" << topnode->resistor << ", R" << topnode->child[0]->resistor << ", R";
-    file << topnode->child[1]->resistor <<"\n";
+    file << "        MUL R" << topnode->register << ", R" << topnode->child[0]->register << ", R";
+    file << topnode->child[1]->register <<"\n";
   }
   //-----------------------------------------------------------------
 }
