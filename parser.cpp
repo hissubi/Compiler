@@ -210,7 +210,7 @@ bool parsing_table_generator(void)
     parsing_table[3][5] = grammar_list + 3;
     parsing_table[4][5] = grammar_list + 6;
     parsing_table[5][6] = grammar_list + 7;
-    parsing_table[2][7] = grammar_list + 3;
+    parsing_table[2][7] = grammar_list + 2;
     parsing_table[3][7] = grammar_list + 4;
     parsing_table[5][7] = grammar_list + 8;
     parsing_table[6][7] = grammar_list + 9;
@@ -347,6 +347,8 @@ bool LL_parser(vector<vector<string>> token)
         if(current_grammar == NULL)
         {
             cout << "Syntax Error: no appropriate rule: line" << line+1 << endl;
+            cout << top_token << " " << top_parse_stack<< endl;
+            break;
             return false;
         }
         
@@ -371,7 +373,7 @@ bool LL_parser(vector<vector<string>> token)
     }
 
     //print tree
-/*
+
     cout << "\n\n";
     vector <Node*> check_tree;
     check_tree.push_back(root);
@@ -392,7 +394,7 @@ bool LL_parser(vector<vector<string>> token)
         cout << endl;
         
     }
-*/
+    cout << "parser end\n\n";
 
     if(token.size() == line + 1 && token[line].size() == 0) return true;
     else 

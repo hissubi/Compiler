@@ -1,0 +1,4 @@
+myprogram () {
+    int a;
+    a = 1;
+}
