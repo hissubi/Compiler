@@ -1,6 +1,4 @@
 myprogram () {
   int a;
   a = 1;
-  EXIT a;
-    int a;
 }

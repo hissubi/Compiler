@@ -13,7 +13,6 @@ using namespace std;
 void build_symbol_table(ofstream& symbol_file, Node*& root){
 
   //init
-  use_resistor = 0;
 	int blockid = 0;
   int labelid = 0;
 
@@ -33,10 +32,6 @@ void build_symbol_table(ofstream& symbol_file, Node*& root){
     //pop
     Node* topnode = check_tree[0];
     check_tree.erase(check_tree.begin());
-
-    //check using resistor numbers
-    if( (topnode->resistor + 1) > use_resistor ) 
-      use_resistor = topnode->resistor + 1;
 
     //block management : to seperate scope
 		if(topnode-> data == "block0") {

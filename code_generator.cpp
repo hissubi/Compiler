@@ -16,6 +16,8 @@ string find_addr(Node* tmpnode, string target, int c_scope);
 bool code_generator(ofstream& code_file, Node* topnode) {
   //init flag
   flag = true;
+  //init used resistor numbers
+  use_resistor = 0;
   
   //print shape
   code_file << "\n\n****************************\n";
@@ -57,6 +59,9 @@ void search_tree(ofstream& file, Node* topnode) {
     if(topnode->child[0]->data == "EXIT") {
       file << "        LD RR, R" << topnode->resistor << "\n";
       file << "        JUMP END\n";
+
+      //use Resistor Returning
+      use_resistor++;
     }
   }
 
@@ -76,6 +81,10 @@ void search_tree(ofstream& file, Node* topnode) {
   }
   //print LD
   if(topnode->data == "fact0") {
+    //check using resistor numbers
+    if( (topnode->resistor + 1) > use_resistor ) 
+      use_resistor = topnode->resistor + 1;
+
     file << "        LD R" << topnode->resistor << ", ";
     Node* tmpnode = topnode->child[0];
     if(tmpnode->data == "num")
@@ -91,6 +100,9 @@ void search_tree(ofstream& file, Node* topnode) {
   }
   //print LT
   if(topnode->data == "cond0") {
+    //check using resistor numbers
+    if( (topnode->resistor + 1) > use_resistor ) 
+      use_resistor = topnode->resistor + 1;
     file << "        LT R" << topnode->resistor << ", R";
     file << topnode->child[0]->resistor << ", R" << topnode->child[2]->resistor << "\n";
   }
