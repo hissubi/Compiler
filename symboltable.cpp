@@ -13,6 +13,7 @@ void build_symbol_table(string input_file_name){
 	symbol_file.open(input_file_name + ".symbol");
 
 	int blockid = 0;
+  int labelid = 0;
 
 	vector <vector <string>> symbol_table;
 	vector <vector <vector <string>>> symbol_table_scopes;
@@ -37,7 +38,6 @@ void build_symbol_table(string input_file_name){
       topnode->scope = blockid;
 		}
 
-    cout << "1\n";
 		if(topnode->data == "decl0" && topnode->childn == 3){ //declare : put declared to symbol table
 			buf.push_back(topnode->child[1]->child[0]->data);	//name
 			buf.push_back(topnode->child[0]->child[0]->data);	//type
@@ -75,18 +75,28 @@ void build_symbol_table(string input_file_name){
       buf.push_back("1000");
 		}
 
-    //cout << "data : " << topnode->data << "  child num: " << topnode->childn << endl;
-    //cout << "\t child : ";
     for(int i = 0; i < topnode->childn; i++) {
       Node* tmpnode = topnode->child[i];
       tmpnode->scope = topnode->scope;
       tmpnode->resistor = topnode->resistor;
-      tmpnode->label = topnode->label;
+      if(topnode->data == "cond0" && i == 2)
+        tmpnode->resistor++;
 
-      //cout << tmpnode->data << " ";
+      tmpnode->label = topnode->label;
+      if(topnode->data == "stat0" && i == 2 && tmpnode->data == "THEN")
+        tmpnode->label = labelid;
+      if(topnode->data == "stat0" && i == 4 && tmpnode->data == "ELSE")
+        tmpnode->label = labelid;
+      
+      if(topnode->data == "stat0" && i == 3 && tmpnode->data == "block0")
+        tmpnode->label = labelid + 1;
+      if(topnode->data == "stat0" && i == 5 && tmpnode->data == "block0") {
+        tmpnode->label = labelid + 1;
+        labelid += 2;
+      }
+
       check_tree.insert(check_tree.begin()+i, tmpnode);
     }
-    //cout << endl;
 		if(buf.size() > 0){
 			symbol_table.push_back(buf);
 			buf.clear();
@@ -112,4 +122,29 @@ void build_symbol_table(string input_file_name){
 		symbol_file << endl;
 	}
 	symbol_file.close();
+
+
+
+  // print tree
+    cout << "\n\n";
+    check_tree.clear();
+    check_tree.push_back(root);
+    while(check_tree.size() !=0)
+    {
+        Node* topnode = check_tree[0];
+        check_tree.erase(check_tree.begin());
+        cout << "data: " << topnode->data << "  child num: " << topnode->childn << endl;
+        cout << topnode->resistor << " " << topnode->label << " " << topnode->scope << "\n";
+        
+        cout << "\t child: ";
+        for(int i = 0; i < topnode->childn; i++)
+        {
+            Node* tmpnode = topnode->child[i];
+            cout << tmpnode->data << " ";
+            check_tree.insert(check_tree.begin()+i, tmpnode);
+        }
+        cout << endl;
+        
+    }
+
 }

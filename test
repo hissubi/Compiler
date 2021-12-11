@@ -3,9 +3,7 @@ hello () {
   a = 0 ;
   IF a < 3 THEN {
     int b;
-    int c;
   } ELSE {
-    int c;
     a = 1;
   }
 }

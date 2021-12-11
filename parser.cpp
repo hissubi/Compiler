@@ -369,7 +369,10 @@ bool LL_parser(vector<vector<string>> token)
             token[line].pop_back();
         }
     }
+
+    //print tree
 /*
+    cout << "\n\n";
     vector <Node*> check_tree;
     check_tree.push_back(root);
     while(check_tree.size() !=0)
@@ -377,6 +380,7 @@ bool LL_parser(vector<vector<string>> token)
         Node* topnode = check_tree[0];
         check_tree.erase(check_tree.begin());
         cout << "data: " << topnode->data << "  child num: " << topnode->childn << endl;
+        cout << topnode->resistor << " " << topnode->label << " " << topnode->scope << "\n";
         
         cout << "\t child: ";
         for(int i = 0; i < topnode->childn; i++)
@@ -389,6 +393,7 @@ bool LL_parser(vector<vector<string>> token)
         
     }
 */
+
     if(token.size() == line + 1 && token[line].size() == 0) return true;
     else 
     {
