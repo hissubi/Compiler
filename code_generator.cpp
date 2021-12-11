@@ -36,7 +36,7 @@ bool code_generator(ofstream& code_file, Node* topnode) {
 
   //print shape
   code_file << "\n\n****************************\n";
-  code_file <<"    Using Register : " << use_register << endl;
+  code_file <<"    Using reg : " << use_reg << endl;
   code_file << "****************************\n";
 
   return false;
@@ -57,7 +57,7 @@ void search_tree(ofstream& file, Node* topnode) {
   //print EXIT
   if(topnode->data == "stat0" && topnode->childn == 3) {
     if(topnode->child[0]->data == "EXIT") {
-      file << "        LD RR, R" << topnode->register << "\n";
+      file << "        LD RR, R" << topnode->reg << "\n";
       file << "        JUMP END\n";
 
       //use Resistor Returning
@@ -71,7 +71,7 @@ void search_tree(ofstream& file, Node* topnode) {
 
   //print "="
   if(topnode->data == "stat0" && topnode->childn == 4) {
-    file << "        ST R" << topnode->register << ", ";
+    file << "        ST R" << topnode->reg << ", ";
     if(find_addr(topnode, topnode->child[0]->child[0]->data, topnode->scope) == "-1") {
       flag = false;
       error_line_number = topnode->line_num;
@@ -88,7 +88,7 @@ void search_tree(ofstream& file, Node* topnode) {
 
     file << "        LD R" << topnode->resistor << ", ";
 =======
-    file << "        LD R" << topnode->register << ", ";
+    file << "        LD R" << topnode->reg << ", ";
 >>>>>>> 7a4dcaa5827becc1d9fafa24600a7dc2cd9ddc2c
     Node* tmpnode = topnode->child[0];
     if(tmpnode->data == "num")
@@ -111,8 +111,8 @@ void search_tree(ofstream& file, Node* topnode) {
     file << "        LT R" << topnode->resistor << ", R";
     file << topnode->child[0]->resistor << ", R" << topnode->child[2]->resistor << "\n";
 =======
-    file << "        LT R" << topnode->register << ", R";
-    file << topnode->child[0]->register << ", R" << topnode->child[2]->register << "\n";
+    file << "        LT R" << topnode->reg << ", R";
+    file << topnode->child[0]->reg << ", R" << topnode->child[2]->reg << "\n";
 >>>>>>> 7a4dcaa5827becc1d9fafa24600a7dc2cd9ddc2c
   }
   //print THEN
@@ -142,15 +142,15 @@ void search_tree(ofstream& file, Node* topnode) {
     if(topnode->childn >= 2)
       if(topnode->child[1]->childn >= 1) {
         if(topnode->child[1]->child[0]->data == "+") {
-          file << "        ADD R" << topnode->register << ", R" << topnode->child[0]->register << ", R";
-          file << topnode->child[1]->register <<"\n";
+          file << "        ADD R" << topnode->reg << ", R" << topnode->child[0]->reg << ", R";
+          file << topnode->child[1]->reg <<"\n";
         }
       }
   }
   //print "*"
   if(topnode->data == "T0" && topnode->child[1]->childn != 0) {
-    file << "        MUL R" << topnode->register << ", R" << topnode->child[0]->register << ", R";
-    file << topnode->child[1]->register <<"\n";
+    file << "        MUL R" << topnode->reg << ", R" << topnode->child[0]->reg << ", R";
+    file << topnode->child[1]->reg <<"\n";
   }
   //-----------------------------------------------------------------
 }

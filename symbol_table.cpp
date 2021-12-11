@@ -19,7 +19,7 @@ void build_symbol_table(ofstream& symbol_file, Node*& root){
 	vector <vector <string>> symbol_table;
 	vector <Node*> check_tree;
 
-  root->register = 0;
+  root->reg = 0;
   root->label = 0;
   root->scope = 0;
 
@@ -93,14 +93,14 @@ void build_symbol_table(ofstream& symbol_file, Node*& root){
     for(int i = 0; i < topnode->childn; i++) {
       Node* tmpnode = topnode->child[i];
       tmpnode->scope = topnode->scope;
-      tmpnode->registor = topnode->register;
+      tmpnode->registor = topnode->reg;
       //Sethi-Ullman
       if(topnode->data == "cond0" && i == 2)
-        tmpnode->register++;
+        tmpnode->reg++;
       if(topnode->data == "expr0" && i == 1)
-        tmpnode->register++;
+        tmpnode->reg++;
       if(topnode->data == "T0" && tmpnode->childn != 0 && i == 1)
-        tmpnode->register++;
+        tmpnode->reg++;
 
       //put label in IF instruction
       tmpnode->label = topnode->label;
@@ -172,7 +172,7 @@ void build_symbol_table(ofstream& symbol_file, Node*& root){
         Node* topnode = check_tree[0];
         check_tree.erase(check_tree.begin());
         cout << "data: " << topnode->data << "  child num: " << topnode->childn << endl;
-        cout << topnode->register << " " << topnode->label << " " << topnode->scope << "\n";
+        cout << topnode->reg << " " << topnode->label << " " << topnode->scope << "\n";
         
         cout << "\t child: ";
         for(int i = 0; i < topnode->childn; i++)
