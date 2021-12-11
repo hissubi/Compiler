@@ -1,0 +1,23 @@
+lexical success
+11
+1 line size: 4
+hello ( ) { 
+2 line size: 3
+int a ; 
+3 line size: 4
+a = 0 ; 
+4 line size: 6
+IF a < 3 THEN { 
+5 line size: 3
+int b ; 
+6 line size: 3
+int c ; 
+7 line size: 3
+} ELSE { 
+8 line size: 3
+int c ; 
+9 line size: 4
+a = 1 ; 
+10 line size: 1
+} 
+11 line size: 1
