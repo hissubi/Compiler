@@ -8,12 +8,14 @@
 
 using namespace std;
 
+bool flag;
 void search_tree(ofstream& file, Node* topnode);
 string find_addr(Node* tmpnode, string target, int c_scope);
 
 void code_generator(string input_file_name, Node* topnode) {
   ofstream code_file;
   code_file.open(input_file_name + ".code");
+  flag = true;
   
   code_file << "\n\n****************************\n";
   code_file <<"       Psuedo Code "<< endl;
@@ -21,10 +23,18 @@ void code_generator(string input_file_name, Node* topnode) {
 
   search_tree(code_file, topnode);
 
+  if(flag == false) {
+    code_file << "\nPRINT ERROR\n";
+    cout << "\nERROR IN CODE_GENERATOR\n";
+    return;
+  }
+
   code_file << "\n\n****************************\n";
   code_file <<"    Using Register : " << use_resistor << endl;
   code_file << "****************************\n";
+
   code_file.close();
+
 }
 
 void search_tree(ofstream& file, Node* topnode) {
@@ -34,12 +44,19 @@ void search_tree(ofstream& file, Node* topnode) {
   }
 
   //modify here------------------------------------------------------
+  
+  if(flag == false)
+    return;
 
   if(topnode->data == "(")
     file << "BEGIN " << topnode->parent->child[0]->child[0]->data << "\n";
 
   if(topnode->data == "stat0" && topnode->childn == 4) {
     file << "        ST R" << topnode->resistor << ", ";
+    if(find_addr(topnode, topnode->child[0]->child[0]->data, topnode->scope) == "-1") {
+      flag = false;
+      return;
+    }
     file << "(" << find_addr(topnode, topnode->child[0]->child[0]->data, topnode->scope) << ")\n";
   }
   if(topnode->data == "fact0") {
@@ -47,8 +64,13 @@ void search_tree(ofstream& file, Node* topnode) {
     Node* tmpnode = topnode->child[0];
     if(tmpnode->data == "num")
       file << tmpnode->child[0]->data << "\n";
-    else
+    else {
+      if(find_addr(topnode, topnode->child[0]->child[0]->data, topnode->scope) == "-1") {
+        flag = false;
+        return;
+      }
       file << "(" << find_addr(tmpnode, tmpnode->child[0]->data, tmpnode->scope) << ")\n";
+    }
   }
   if(topnode->data == "cond0") {
     file << "        LT R" << topnode->resistor << ", R";
@@ -90,7 +112,7 @@ void search_tree(ofstream& file, Node* topnode) {
 }
 
 string find_addr(Node* tmpnode, string target, int c_scope) {
-  string addr;
+  string addr = "-1";
   vector <vector <string>> symbol_table;
   int talchul = 0;
   while(1) {

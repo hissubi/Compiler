@@ -5,7 +5,7 @@ myprogram ( ) {
 2 line size: 3
 int a ; 
 3 line size: 4
-a = 1 ; 
+c = 1 ; 
 4 line size: 6
 IF a < 3 THEN { 
 5 line size: 3
@@ -96,8 +96,8 @@ data: stat0  child num: 4
 	 child: word = expr0 ; 
 data: word  child num: 1
 0 0 0
-	 child: a 
-data: a  child num: 0
+	 child: c 
+data: c  child num: 0
 0 0 0
 	 child: 
 data: =  child num: 0
@@ -610,8 +610,8 @@ data: stat0  child num: 4
 	 child: word = expr0 ; 
 data: word  child num: 1
 0 0 1
-	 child: a 
-data: a  child num: 0
+	 child: c 
+data: c  child num: 0
 0 0 1
 	 child: 
 data: =  child num: 0
@@ -1061,3 +1061,4 @@ data: slist_0  child num: 0
 data: }  child num: 0
 0 0 1
 	 child: 
+ERROR IN CODE_GENERATOR

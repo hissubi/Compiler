@@ -1,6 +1,6 @@
 myprogram () {
   int a;
-  a = 1;
+  c = 1;
   IF a<3 THEN {
     int b;
     b = 4;
