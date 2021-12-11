@@ -5,6 +5,7 @@ TARGET = Compiler2021
 
 $(TARGET) : $(OBJS)
 	$(CC) -o $@ $(OBJS)
+	rm -f *.o
 
 clean : 
 	rm -f *.o
