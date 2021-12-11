@@ -1,10 +1,14 @@
 myprogram () {
   int a;
+  a = 1;
   IF a<3 THEN {
     int b;
-    a = 4;
-    b = 5;
-    b = a * b;
+    b = 4;
+
+    IF b < 4 THEN {
+    } ELSE {
+      a = 5;
+    }
   } ELSE {
     a = 10;
   }
