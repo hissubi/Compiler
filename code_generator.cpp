@@ -16,8 +16,8 @@ string find_addr(Node* tmpnode, string target, int c_scope);
 bool code_generator(ofstream& code_file, Node* topnode) {
   //init flag
   flag = true;
-  //init used resistor numbers
-  use_resistor = 0;
+  //init used reg numbers
+  use_reg = 0;
   
   //print shape
   code_file << "\n\n****************************\n";
@@ -60,8 +60,8 @@ void search_tree(ofstream& file, Node* topnode) {
       file << "        LD RR, R" << topnode->reg << "\n";
       file << "        JUMP END\n";
 
-      //use Resistor Returning
-      use_resistor++;
+      //use reg Returning
+      use_reg++;
     }
   }
 
@@ -81,15 +81,13 @@ void search_tree(ofstream& file, Node* topnode) {
   }
   //print LD
   if(topnode->data == "fact0") {
-<<<<<<< HEAD
-    //check using resistor numbers
-    if( (topnode->resistor + 1) > use_resistor ) 
-      use_resistor = topnode->resistor + 1;
+    //check using reg numbers
+    if( (topnode->reg + 1) > use_reg ) 
+      use_reg = topnode->reg + 1;
 
-    file << "        LD R" << topnode->resistor << ", ";
-=======
     file << "        LD R" << topnode->reg << ", ";
->>>>>>> 7a4dcaa5827becc1d9fafa24600a7dc2cd9ddc2c
+    file << "        LD R" << topnode->reg << ", ";
+
     Node* tmpnode = topnode->child[0];
     if(tmpnode->data == "num")
       file << tmpnode->child[0]->data << "\n";
@@ -104,16 +102,13 @@ void search_tree(ofstream& file, Node* topnode) {
   }
   //print LT
   if(topnode->data == "cond0") {
-<<<<<<< HEAD
-    //check using resistor numbers
-    if( (topnode->resistor + 1) > use_resistor ) 
-      use_resistor = topnode->resistor + 1;
-    file << "        LT R" << topnode->resistor << ", R";
-    file << topnode->child[0]->resistor << ", R" << topnode->child[2]->resistor << "\n";
-=======
+    //check using reg numbers
+    if( (topnode->reg + 1) > use_reg ) 
+      use_reg = topnode->reg + 1;
     file << "        LT R" << topnode->reg << ", R";
     file << topnode->child[0]->reg << ", R" << topnode->child[2]->reg << "\n";
->>>>>>> 7a4dcaa5827becc1d9fafa24600a7dc2cd9ddc2c
+    file << "        LT R" << topnode->reg << ", R";
+    file << topnode->child[0]->reg << ", R" << topnode->child[2]->reg << "\n";
   }
   //print THEN
   if(topnode->data == "THEN") {
