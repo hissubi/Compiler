@@ -1,5 +1,5 @@
 lexical success
-15
+17
 1 line size: 4
 myprogram ( ) { 
 2 line size: 3
@@ -17,18 +17,22 @@ b = 4 ;
 8 line size: 6
 IF b < 4 THEN { 
 9 line size: 3
+int a ; 
+10 line size: 3
+int b ; 
+11 line size: 3
 } ELSE { 
-10 line size: 4
+12 line size: 4
 a = 5 ; 
-11 line size: 1
+13 line size: 1
 } 
-12 line size: 3
+14 line size: 3
 } ELSE { 
-13 line size: 4
+15 line size: 4
 a = 10 ; 
-14 line size: 1
+16 line size: 1
 } 
-15 line size: 1
+17 line size: 1
 } 
 parser start
 
@@ -345,6 +349,48 @@ data: {  child num: 0
 data: decls0  child num: 1
 0 0 0
 	 child: decls_0 
+data: decls_0  child num: 2
+0 0 0
+	 child: decl0 decls_0 
+data: decl0  child num: 3
+0 0 0
+	 child: vtype0 word ; 
+data: vtype0  child num: 1
+0 0 0
+	 child: int 
+data: int  child num: 0
+0 0 0
+	 child: 
+data: word  child num: 1
+0 0 0
+	 child: a 
+data: a  child num: 0
+0 0 0
+	 child: 
+data: ;  child num: 0
+0 0 0
+	 child: 
+data: decls_0  child num: 2
+0 0 0
+	 child: decl0 decls_0 
+data: decl0  child num: 3
+0 0 0
+	 child: vtype0 word ; 
+data: vtype0  child num: 1
+0 0 0
+	 child: int 
+data: int  child num: 0
+0 0 0
+	 child: 
+data: word  child num: 1
+0 0 0
+	 child: b 
+data: b  child num: 0
+0 0 0
+	 child: 
+data: ;  child num: 0
+0 0 0
+	 child: 
 data: decls_0  child num: 0
 0 0 0
 	 child: 
@@ -817,6 +863,48 @@ data: {  child num: 0
 data: decls0  child num: 1
 0 3 3
 	 child: decls_0 
+data: decls_0  child num: 2
+0 3 3
+	 child: decl0 decls_0 
+data: decl0  child num: 3
+0 3 3
+	 child: vtype0 word ; 
+data: vtype0  child num: 1
+0 3 3
+	 child: int 
+data: int  child num: 0
+0 3 3
+	 child: 
+data: word  child num: 1
+0 3 3
+	 child: a 
+data: a  child num: 0
+0 3 3
+	 child: 
+data: ;  child num: 0
+0 3 3
+	 child: 
+data: decls_0  child num: 2
+0 3 3
+	 child: decl0 decls_0 
+data: decl0  child num: 3
+0 3 3
+	 child: vtype0 word ; 
+data: vtype0  child num: 1
+0 3 3
+	 child: int 
+data: int  child num: 0
+0 3 3
+	 child: 
+data: word  child num: 1
+0 3 3
+	 child: b 
+data: b  child num: 0
+0 3 3
+	 child: 
+data: ;  child num: 0
+0 3 3
+	 child: 
 data: decls_0  child num: 0
 0 3 3
 	 child: 

@@ -71,12 +71,14 @@ void build_symbol_table(string input_file_name){
         addr = stoi(symbol_table[symbol_table.size() - 1][3]) + stoi(symbol_table[symbol_table.size() - 1][2]);
 
       buf.push_back(to_string(addr));
+      buf.push_back(to_string(topnode->line_num));
 		}
 		if(topnode->data == "prog0"){	//add function to symbol table
 			buf.push_back(topnode->child[0]->child[0]->data); //name
 			buf.push_back("func"); //type
       buf.push_back("0"); //size
       buf.push_back("1000");
+      buf.push_back(to_string(topnode->line_num));
 		}
 
     for(int i = 0; i < topnode->childn; i++) {
@@ -118,10 +120,10 @@ void build_symbol_table(string input_file_name){
 
   // print symbol_table
 
-  symbol_file << "=================================================================================\n";
-	symbol_file << setw(6) <<"scope" << setw(18) << "Symbol name";
+  symbol_file << "======================================================================================\n";
+	symbol_file << setw(6) <<"scope" << setw(8) << "line" << setw(18) << "Symbol name";
 	symbol_file << setw(18) <<"type" << setw(18) << "size" << setw(18) << "address" << "\n";
-  symbol_file << "=================================================================================\n";
+  symbol_file << "======================================================================================\n";
 
 	for(unsigned int b=0;b<symbol_table_scopes.size();b++) {
 		symbol_file << setw(6) << b;
@@ -130,7 +132,9 @@ void build_symbol_table(string input_file_name){
 		for(unsigned int i=0;i<symbol_table.size();i++){
       if(i!=0)
         symbol_file << setw(6) << " ";
-			for(unsigned int j=0;j<symbol_table[i].size();j++){
+			for(unsigned int j=0;j<symbol_table[i].size() - 1;j++){
+        if(j == 0) 
+				  symbol_file << setw(8) << symbol_table[i][4];
         if(j == 1 && symbol_table[i][j] == "func") {
 				  symbol_file << setw(18) << symbol_table[i][j];
           break;
@@ -141,7 +145,7 @@ void build_symbol_table(string input_file_name){
 		}
 		symbol_file << endl;
 	}
-  symbol_file << "=================================================================================\n";
+  symbol_file << "======================================================================================\n";
 	symbol_file.close();
 
 
