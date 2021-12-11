@@ -13,14 +13,14 @@ using namespace std;
 void build_symbol_table(ofstream& symbol_file, Node*& root){
 
   //init
-  use_resistor = 0;
+  use_register = 0;
 	int blockid = 0;
   int labelid = 0;
 
 	vector <vector <string>> symbol_table;
 	vector <Node*> check_tree;
 
-  root->resistor = 0;
+  root->register = 0;
   root->label = 0;
   root->scope = 0;
 
@@ -34,9 +34,9 @@ void build_symbol_table(ofstream& symbol_file, Node*& root){
     Node* topnode = check_tree[0];
     check_tree.erase(check_tree.begin());
 
-    //check using resistor numbers
-    if( (topnode->resistor + 1) > use_resistor ) 
-      use_resistor = topnode->resistor + 1;
+    //check using register numbers
+    if( (topnode->register + 1) > use_register ) 
+      use_registor = topnode->registor + 1;
 
     //block management : to seperate scope
 		if(topnode-> data == "block0") {
@@ -61,7 +61,7 @@ void build_symbol_table(ofstream& symbol_file, Node*& root){
 
       int addr = 0;
 
-      //find used resistor addr in the other scope (find at parent node)
+      //find used registor addr in the other scope (find at parent node)
       if(symbol_table.size() == 0) {
         int c_scope = topnode->scope;
         Node* c_node = topnode;
@@ -98,14 +98,14 @@ void build_symbol_table(ofstream& symbol_file, Node*& root){
     for(int i = 0; i < topnode->childn; i++) {
       Node* tmpnode = topnode->child[i];
       tmpnode->scope = topnode->scope;
-      tmpnode->resistor = topnode->resistor;
+      tmpnode->registor = topnode->register;
       //Sethi-Ullman
       if(topnode->data == "cond0" && i == 2)
-        tmpnode->resistor++;
+        tmpnode->register++;
       if(topnode->data == "expr0" && i == 1)
-        tmpnode->resistor++;
+        tmpnode->register++;
       if(topnode->data == "T0" && tmpnode->childn != 0 && i == 1)
-        tmpnode->resistor++;
+        tmpnode->register++;
 
       //put label in IF instruction
       tmpnode->label = topnode->label;
@@ -177,7 +177,7 @@ void build_symbol_table(ofstream& symbol_file, Node*& root){
         Node* topnode = check_tree[0];
         check_tree.erase(check_tree.begin());
         cout << "data: " << topnode->data << "  child num: " << topnode->childn << endl;
-        cout << topnode->resistor << " " << topnode->label << " " << topnode->scope << "\n";
+        cout << topnode->register << " " << topnode->label << " " << topnode->scope << "\n";
         
         cout << "\t child: ";
         for(int i = 0; i < topnode->childn; i++)
