@@ -4,9 +4,14 @@
 using namespace std;
 
 Grammar grammar_list[N_GRAMMAR];
-bool parsing_table_generator(void)
+Nonterminal nonterminal_list[N_NONTERMINAL];
+Terminal terminal_list[N_TERMINAL];
+Grammar* parsing_table[N_NONTERMINAL][N_TERMINAL];
+
+void parsing_table_generator(void)
 {
     //1. nonterminal list
+    //
     nonterminal_list[0].nonterminal = "prog0";
     nonterminal_list[0].nonterminal_id = 0;
 
@@ -198,6 +203,7 @@ bool parsing_table_generator(void)
 
 
     //4.making table
+
     parsing_table[5][0] = grammar_list + 8;
     parsing_table[11][3] = grammar_list + 18;
     parsing_table[13][3] = grammar_list + 21;
@@ -253,32 +259,40 @@ bool parsing_table_generator(void)
     parsing_table[14][17] = grammar_list + 22;
     parsing_table[15][17] = grammar_list + 24;
 
-    return true;
-
 }
+
+// convert terminal to terminal_id
 int find_terminal_id(string terminal)
 {
    for(int i = 0; i < N_TERMINAL-2; i++)
    {
        if(terminal_list[i].terminal == terminal) return terminal_list[i].terminal_id;
    }
-   if(terminal[0] - '0' >= 0 && terminal[0] - '0' <= 9 ) return 16; //num
-   else if((terminal[0] - 'a' >=0 && terminal[0] - 'a' < 26) || (terminal[0] - 'A' >=0 && terminal[0] - 'A' < 26)) return 17; //word
-   else return -1;
+   //terminal is num
+   if(terminal[0] - '0' >= 0 && terminal[0] - '0' <= 9 ) return 16; 
+   
+   //terminal is word
+   else if((terminal[0] - 'a' >=0 && terminal[0] - 'a' < 26) || (terminal[0] - 'A' >=0 && terminal[0] - 'A' < 26)) return 17; 
+   
+   // return -1 if there isn't appropriate terminal
+   else return -1; 
 }
 
+// convert nonterminal to nonterminal_id
 int find_nonterminal_id(string nonterminal)
 {
    for(int i = 0; i < N_NONTERMINAL; i++)
    {
        if(nonterminal_list[i].nonterminal == nonterminal) return nonterminal_list[i].nonterminal_id;
    }
-   return -1;
+   // return -1 if there isn't appropriate terminal
+   return -1; 
 }
 
-bool LL_parser(vector<vector<string>> token)
+bool LL_parser(vector<vector<string>> token, Node*& root)
 {   
-    cout << "parser start\n";
+    parsing_table_generator();
+    
     int line = 0;
     int flag = 0;
     vector <string> parse_stack;
@@ -340,7 +354,7 @@ bool LL_parser(vector<vector<string>> token)
         {
             cout << terminal_id << nonterminal_id;
             cout << "Syntax Error: line " << line+1 << endl;
-            return false;
+            return true;
         }
 
         Grammar* current_grammar = parsing_table[nonterminal_id][terminal_id];
@@ -350,7 +364,7 @@ bool LL_parser(vector<vector<string>> token)
             cout << "Syntax Error: no appropriate rule: line" << line+1 << endl;
             cout << top_token << " " << top_parse_stack<< endl;
             break;
-            return false;
+            return true;
         }
         
         parse_stack.erase(parse_stack.begin());
@@ -373,7 +387,7 @@ bool LL_parser(vector<vector<string>> token)
             token[line].pop_back();
         }
     }
-
+/*
     //print tree
 
     cout << "\n\n";
@@ -397,11 +411,11 @@ bool LL_parser(vector<vector<string>> token)
         
     }
     cout << "parser end\n\n";
-
-    if(token.size() == line + 1 && token[line].size() == 0) return true;
+*/
+    if(token.size() == line + 1 && token[line].size() == 0) return false;
     else 
     {
         cout << "Syntax Error: excessive input token" << endl;
-        return false;
+        return true;
     }          
 }

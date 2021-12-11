@@ -9,9 +9,7 @@
 
 using namespace std;
 
-void build_symbol_table(string input_file_name){
-  ofstream symbol_file;
-	symbol_file.open(input_file_name + ".symbol");
+void build_symbol_table(ofstream& symbol_file, Node*& root){
 
   use_resistor = 0;
 	int blockid = 0;
@@ -146,10 +144,9 @@ void build_symbol_table(string input_file_name){
 		symbol_file << endl;
 	}
   symbol_file << "======================================================================================\n";
-	symbol_file.close();
 
 
-
+/*
   // print tree
     cout << "\n\n";
     check_tree.clear();
@@ -171,5 +168,5 @@ void build_symbol_table(string input_file_name){
         cout << endl;
         
     }
-
+*/
 }

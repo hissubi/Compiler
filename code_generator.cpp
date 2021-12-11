@@ -12,9 +12,7 @@ bool flag;
 void search_tree(ofstream& file, Node* topnode);
 string find_addr(Node* tmpnode, string target, int c_scope);
 
-void code_generator(string input_file_name, Node* topnode) {
-  ofstream code_file;
-  code_file.open(input_file_name + ".code");
+bool code_generator(ofstream& code_file, Node* topnode) {
   flag = true;
   
   code_file << "\n\n****************************\n";
@@ -26,15 +24,14 @@ void code_generator(string input_file_name, Node* topnode) {
   if(flag == false) {
     code_file << "\nPRINT ERROR\n";
     cout << "\nERROR IN CODE_GENERATOR\n";
-    return;
+    return true;
   }
 
   code_file << "\n\n****************************\n";
   code_file <<"    Using Register : " << use_resistor << endl;
   code_file << "****************************\n";
 
-  code_file.close();
-
+  return false;
 }
 
 void search_tree(ofstream& file, Node* topnode) {

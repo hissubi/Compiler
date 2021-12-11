@@ -6,21 +6,14 @@
 
 using namespace std;
 
-char operators[] = {'+', '*', '<', ';', '=', '(', ')', '{', '}'};
-Grammar grammer_list[30];
-Nonterminal nonterminal_list[N_NONTERMINAL];
-Terminal terminal_list[N_TERMINAL];
-Grammar* parsing_table[N_NONTERMINAL][N_TERMINAL];
-Node* root;
-int use_resistor;
+int use_resistor;   // number of used register
 
 vector <vector <vector <string>>> symbol_table_scopes;
 
 bool lexical_analyzer(ifstream& read_file, vector<vector<string>>& token);
-bool parsing_table_generator(void);
-bool LL_parser(vector<vector<string>> token);
-void build_symbol_table(string input_file_name);
-void code_generator(string input_file_name, Node* topnode);
+bool LL_parser(vector<vector<string>> token, Node*& root);
+void build_symbol_table(ofstream& symbol_file, Node*& root);
+bool code_generator(ofstream& code_file, Node* topnode);
 
 int main(int argc, char** argv)
 {
@@ -31,36 +24,27 @@ int main(int argc, char** argv)
 
     string input_file_name(argv[1]);
     
+    // open files for result
     ifstream target_file;
     ofstream instruction_file;
-    //ofstream symbol_file;
+    ofstream symbol_file;
 
     target_file.open(input_file_name);
     instruction_file.open(input_file_name + ".code");
-    //symbol_file.open(input_file_name + ".symbol");
+    symbol_file.open(input_file_name + ".symbol");
 
-    vector<vector<string>> tokens;
+    vector<vector<string>> tokens; // data of tokens
+    Node* root; // root address of syntax tree
     bool is_error = false;
-
+    
+    //compiler starts : returns true if error occurs
     is_error = lexical_analyzer(target_file, tokens);
-    if(is_error) cout << "lexical success" << endl;
-    cout << tokens.size() << endl;
-    for(unsigned int i = 0; i < tokens.size(); i++){
-        cout << i+1 << " line size: " << tokens[i].size() << endl;
-        for(unsigned int j = 0; j < tokens[i].size(); j++)
-        {
-            cout << tokens[i][j] << ' ';
-        }
-        cout << "\n";
-    }
-    is_error = parsing_table_generator();
-    is_error = LL_parser(tokens);
-	  build_symbol_table(input_file_name);
-    code_generator(input_file_name, root);
- 
+    if(!is_error) is_error = LL_parser(tokens, root);
+	if(!is_error) build_symbol_table(symbol_file, root);
+    if(!is_error) code_generator(instruction_file, root);
 
-
+    //close files
     target_file.close();
     instruction_file.close();
-    //symbol_file.close();
+    symbol_file.close();
 }
