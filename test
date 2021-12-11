@@ -1,17 +1,10 @@
-myprogram () {
-    int a;
+hello () {
+  int a ;
+  a = 0 ;
+  IF a < 3 THEN {
     int b;
-    IF a<3 THEN {
-        int b;
-        a = 4;
-        b = 5;
-        b = a * b;
-                            
-    }
-    ELSE {
-        int c;
-        a = 10;
-                
-    }
-      
+  } ELSE {
+    int c;
+    a = 1;
+  }
 }

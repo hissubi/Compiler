@@ -17,6 +17,10 @@ class Node{
     int childn;
     Node* parent;
     vector<Node*> child;
+
+    int resistor;
+    int label;
+    int scope;
 };
 
 class Grammar{
