@@ -86,7 +86,6 @@ void search_tree(ofstream& file, Node* topnode) {
       use_reg = topnode->reg + 1;
 
     file << "        LD R" << topnode->reg << ", ";
-    file << "        LD R" << topnode->reg << ", ";
 
     Node* tmpnode = topnode->child[0];
     if(tmpnode->data == "num")
