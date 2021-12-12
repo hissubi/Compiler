@@ -89,7 +89,7 @@ void build_symbol_table(ofstream& symbol_file, Node*& root){
       buf.push_back(to_string(topnode->line_num)); //target code's line number
 		}
 
-    //enqueue
+    //push
     for(int i = 0; i < topnode->childn; i++) {
       Node* tmpnode = topnode->child[i];
       tmpnode->scope = topnode->scope;
@@ -116,7 +116,7 @@ void build_symbol_table(ofstream& symbol_file, Node*& root){
         labelid += 2;
       }
 
-      //enqueue
+      //push
       check_tree.insert(check_tree.begin()+i, tmpnode);
     }
     //buf put in current symbol table
