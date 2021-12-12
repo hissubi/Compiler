@@ -23,7 +23,6 @@ bool lexical_analyzer(ifstream& read_file, vector<vector<string>>& tokens)
         // get line until file ends
         getline(read_file, input_line);
         if(read_file.eof()) break;
-        
         int state = 0; // state for FSA
 
         // read each character in the line
@@ -110,6 +109,17 @@ bool lexical_analyzer(ifstream& read_file, vector<vector<string>>& tokens)
                 return true;
             }
             //=============================================================================================================================
+            
+            // if the character is last one in line, generate token
+            if(i == input_line.size()-1)
+            {
+                string t = input_line.substr(rp_begin, i+1 - rp_begin);
+                rp_begin = i+1;
+                token_line.push_back(t);
+                state = 0;
+
+            }
+
         }
 
         // add all tokens that in the line

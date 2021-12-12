@@ -11,23 +11,25 @@
 
 using namespace std;
 
+// Node for syntax tree
 class Node{
     public:
-    string data;
-    int childn;
-    Node* parent;
-    vector<Node*> child;
-    int line_num;
+    string data;            // terminal, nonterminal data
+    int childn;             // number of child
+    Node* parent;           // parent node address
+    vector<Node*> child;    // child node address
+    int line_num;           // line nunber in target code
 
-    int reg;
-    int label;
-    int scope;
+    int reg;                // register number
+    int label;              // label number
+    int scope;              // scope number
 };
 
+// Regular Grammar
 class Grammar{
     public:
-    vector<string> rhs;
-    int grammar_id;
+    vector<string> rhs;     // right hand side object
+    int grammar_id;         
 };
 
 class Nonterminal{

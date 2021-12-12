@@ -29,7 +29,7 @@ bool code_generator(ofstream& code_file, Node* topnode) {
 
   //ERROR
   if(flag == false) {
-    code_file << "\nError: check error message\n";
+    code_file << "\n\nCompile error: check error message from compiler\n";
     cout << "Semantic Error (Line " << error_line_number << "): Undeclared variable" << endl;
     return true;
   }

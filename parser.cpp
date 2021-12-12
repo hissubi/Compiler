@@ -336,7 +336,6 @@ bool LL_parser(vector<vector<string>> token, Node*& root)
         string top_parse_stack = parse_stack[0];    // top of parser stack
         string top_token = token[line][0];          // next token
         Node* top_node = node_stack[0];             // top of node stack
-        
         // pop node stack
         node_stack.erase(node_stack.begin());
 
@@ -363,7 +362,7 @@ bool LL_parser(vector<vector<string>> token, Node*& root)
             // pop parser stack and token
             token[line].erase(token[line].begin());
             parse_stack.erase(parse_stack.begin());
-
+            
             continue;
         }
         
@@ -374,7 +373,7 @@ bool LL_parser(vector<vector<string>> token, Node*& root)
         if(terminal_id == -1 || nonterminal_id == -1) 
         {
             // error
-            cout << "Syntax Error (Line " << line+1 << "): Error in parser process" << endl;
+            cout << "Syntax Error (Line " << line+1 << "): There is no proper grammar" << endl;
             return true;
         }
 
@@ -415,6 +414,12 @@ bool LL_parser(vector<vector<string>> token, Node*& root)
         }
     }
     
+    // skip last enter('\n') if it exist
+    while(token.size() != line+1 && token[line].size() == 0)
+    {
+        line++;
+    }
+
     // if read all of tokens : parser finished properly
     if(token.size() == line + 1 && token[line].size() == 0) return false;
 
