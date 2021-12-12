@@ -203,7 +203,13 @@ void parsing_table_generator(void)
 
 
     //4.making table
-
+    for(int i = 0; i < N_GRAMMAR; i++)
+    {
+        for(int j = 0; j < N_GRAMMAR; j++)
+        {
+            parsing_table[i][j] = NULL;
+        }
+    }
     parsing_table[5][0] = grammar_list + 8;
     parsing_table[11][3] = grammar_list + 18;
     parsing_table[13][3] = grammar_list + 21;

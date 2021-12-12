@@ -145,7 +145,7 @@ void build_symbol_table(ofstream& symbol_file, Node*& root){
 		symbol_table = symbol_table_scopes[b];
 		for(unsigned int i=0;i<symbol_table.size();i++){
       if(i!=0)
-        symbol_file << setw(6) << " ";
+        symbol_file << setw(6) ;
 			for(unsigned int j=0;j<symbol_table[i].size() - 1;j++){
         if(j == 0) 
 				  symbol_file << setw(8) << symbol_table[i][4];

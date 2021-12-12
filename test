@@ -2,6 +2,7 @@ myprogram () {
   int a;
   IF a<3 THEN {
     int b;
+    IF int a;
     a = 4;
     b = 5;
     b = a * b;
