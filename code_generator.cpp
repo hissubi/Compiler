@@ -20,9 +20,9 @@ bool code_generator(ofstream& code_file, Node* topnode) {
   use_reg = 0;
   
   //print shape
-  code_file << "\n\n****************************\n";
-  code_file <<"       Psuedo Code "<< endl;
-  code_file << "****************************\n\n\n";
+  code_file << "\n\n*****************************\n";
+  code_file <<"         Psuedo Code "<< endl;
+  code_file << "*****************************\n\n\n";
 
   //print with recursion function
   search_tree(code_file, topnode);
@@ -35,9 +35,9 @@ bool code_generator(ofstream& code_file, Node* topnode) {
   }
 
   //print shape
-  code_file << "\n\n****************************\n";
-  code_file <<"    Using reg : " << use_reg << endl;
-  code_file << "****************************\n";
+  code_file << "\n\n*****************************\n";
+  code_file <<"        Using reg : " << use_reg << endl;
+  code_file << "*****************************\n";
 
   return false;
 }
@@ -104,8 +104,6 @@ void search_tree(ofstream& file, Node* topnode) {
     //check using reg numbers
     if( (topnode->reg + 1) > use_reg ) 
       use_reg = topnode->reg + 1;
-    file << "        LT R" << topnode->reg << ", R";
-    file << topnode->child[0]->reg << ", R" << topnode->child[2]->reg << "\n";
     file << "        LT R" << topnode->reg << ", R";
     file << topnode->child[0]->reg << ", R" << topnode->child[2]->reg << "\n";
   }
