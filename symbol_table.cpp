@@ -23,7 +23,7 @@ void build_symbol_table(ofstream& symbol_file, Node*& root){
   root->label = 0;
   root->scope = 0;
 
-  //queue structure
+  //stack structure
   check_tree.push_back(root);
   //dfs
 	while(check_tree.size() !=0) {
